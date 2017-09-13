@@ -14,9 +14,6 @@
 # Usage:
 # local_universe_setup.sh build
 
-
-
-
 REGISTRY="192.168.33.13"
 REGISTRY_PORT="10000"
 

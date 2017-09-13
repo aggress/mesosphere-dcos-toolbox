@@ -3,7 +3,7 @@
 # Builds, tags and pushes a Docker image to a remote registry
 # In this example, it's mine on Docker hub
 #
-# Usage:
+# Usage
 # docker_buid.sh <source directory> <tag>
 #
 # Example:
