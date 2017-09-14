@@ -10,9 +10,11 @@
 # docker_build.sh /Users/richard/code/dcos-openvpn 0.0.0-1.0
 
 if [ $# -eq 0 ]; then
-    echo "No arguments provided, Usage: docker_build.sh \
-<path to Dockerfile directory> <Docker tag>"
-    exit 1
+  echo "No arguments provided
+Usage: docker_build.sh <path to Dockerfile directory> <image name> \
+<repository name> <tag>
+Example: docker_build.sh /code/dcos-openvpn dcos-openvpn aggress 0.0.0-1.0"
+  exit 1
 fi
 
 cd "$1" || exit
