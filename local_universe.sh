@@ -53,5 +53,5 @@ case "$1" in
   remove) remove ;;
   build)  build  ;;
   new)    new  ;;
-  *)      echo "build, remove <package>, new"; exit 1 ;;
+  *)      echo "Usage: local_universe.sh build, remove <package>, new"; exit 1 ;;
 esac
