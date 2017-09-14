@@ -1,0 +1,15 @@
+{
+  "service": {
+    "name": "kafka",
+    "beta-optin": true,
+    "user": "root"
+  },
+  "brokers": {
+    "count": 1,
+    "disk_type": "ROOT"
+  },
+  "kafka": {
+    "delete_topic_enable": true 
+  }
+}
+

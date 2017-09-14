@@ -1,0 +1,9 @@
+{
+  "service": {
+    "name": "beta-cassandra",
+    "beta-optin": true
+  },
+  "nodes": {
+"count": 1
+}
+}

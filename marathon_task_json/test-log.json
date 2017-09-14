@@ -1,0 +1,7 @@
+{
+  "id": "/test-log",
+  "cmd": "while true;do echo stdout;echo stderr >&2;sleep 1;done",
+  "cpus": 0.001,
+  "instances": 1,
+  "mem": 128
+}

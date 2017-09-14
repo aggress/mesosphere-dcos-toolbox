@@ -1,0 +1,18 @@
+{
+    "id": "myjob",
+    "description": "A job that sleeps regularly",
+    "run": {
+        "cmd": "sleep 20000",
+        "cpus": 0.01,
+        "mem": 32,
+        "disk": 0
+    },
+    "schedules": [
+        {
+            "id": "sleep-schedule",
+            "enabled": true,
+            "cron": "25 0 * * *",
+            "concurrencyPolicy": "ALLOW"
+        }
+    ]
+}
