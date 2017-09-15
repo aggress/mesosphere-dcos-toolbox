@@ -50,9 +50,10 @@ function remove {
   dcos marathon app remove /universe
   dcos package repo remove universe-server
   docker image rm -f $registry:$registry_port/universe-server:universe-server
-  docker rmi -f "$(docker images -aq)"
+  docker rmi -f $(docker images -aq)
   rm -f $u_path/target/*
-  # Yuck, needs proper error handling
+  # Yuck, needs proper error handling. Sleeping whilst package container dies
+  sleep 10
   ssh -F $ssh_config public-agent << 'EOF'
     sudo docker ps -f name=registry -aq | xargs docker kill
     sudo docker images | grep registry | awk {'print $3'} | xargs docker rmi -f
