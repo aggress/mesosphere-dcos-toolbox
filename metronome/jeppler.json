@@ -1,0 +1,20 @@
+{
+  "id": "tests.sleepy-job",
+  "description": "A job that sleeps",
+  "run": {
+    "cmd": "sleep 10",
+    "cpus": 0.01,
+    "mem": 32,
+    "disk": 0
+  },
+  "schedules": [
+    {
+      "id": "default",
+      "enabled": true,
+      "cron": "* * * * *",
+      "timezone": "UTC",
+      "concurrencyPolicy": "ALLOW",
+      "startingDeadlineSeconds": 20
+    }
+  ]
+}

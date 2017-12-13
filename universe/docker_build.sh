@@ -18,6 +18,6 @@ Example: docker_build.sh /code/dcos-openvpn dcos-openvpn aggress 0.0.0-1.0"
 fi
 
 cd "$1" || exit
-docker build -t dcos-openvpn .
-docker tag dcos-openvpn aggress/dcos-openvpn:"$2"
-docker push aggress/dcos-openvpn:"$2"
+docker build -t $2 .
+docker tag $2 $3/$2:"$4"
+docker push $3/$2:"$4"

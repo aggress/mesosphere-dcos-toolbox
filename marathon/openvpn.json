@@ -1,5 +1,6 @@
 {
   "openvpn": {
     "ovpn_password": "password"
-  }
+  },
+  "cpus": 1.0
 }

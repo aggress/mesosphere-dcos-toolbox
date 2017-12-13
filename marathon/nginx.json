@@ -1,0 +1,22 @@
+{
+  "id": "/nginx",
+  "instances": 1,
+  "portDefinitions": [],
+  "acceptedResourceRoles": [ 
+    "testRole"
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "nginx"
+    }
+  },
+  "cpus": 0.1,
+  "mem": 128,
+  "requirePorts": false,
+  "networks": [],
+  "healthChecks": [],
+  "fetch": [],
+  "constraints": []
+}
