@@ -28,7 +28,7 @@ dcos security secrets create-sa-secret --strict cassandra-private.pem cassandra 
 
 # Create a JSON options file with the new service account and secret
 
-tee cassandra-single-node-strict.json << EOF
+tee cassandra-three-node-strict.json << EOF
 {
   "service": {
     "name": "cassandra",
@@ -82,5 +82,5 @@ curl -X PUT --cacert dcos-ca.crt \
 
 # Install the package using the options file 
 
-dcos package install cassandra --options=cassandra-single-node-strict.json --yes
+dcos package install cassandra --options=cassandra-three-node-strict.json --yes
 
