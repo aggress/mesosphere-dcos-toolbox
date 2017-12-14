@@ -36,7 +36,8 @@ tee spark-strict.json << EOF
     "mem": 1024,
     "role": "*",
     "service_account": "spark",
-    "service_account_secret": "spark/private-key"
+    "service_account_secret": "spark/private-key",
+    "user": "root"
   }
 }
 EOF
