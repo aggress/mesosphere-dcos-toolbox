@@ -1,0 +1,19 @@
+{
+  "instances": 1,
+  "portDefinitions": [],
+  "container": {
+    "type": "MESOS",
+    "volumes": [],
+    "docker": {
+      "image": "aggress/malloc1gb:latest"
+    }
+  },
+  "cpus": 0.1,
+  "mem": 256,
+  "requirePorts": false,
+  "networks": [],
+  "healthChecks": [],
+  "fetch": [],
+  "constraints": [],
+  "id": "malloc1gb"
+}

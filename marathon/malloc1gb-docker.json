@@ -1,0 +1,22 @@
+{
+  "instances": 1,
+  "portDefinitions": [],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "aggress/malloc1gb:latest",
+       "parameters": [
+         { "key": "memory-swappiness", "value": "0" }
+       ]
+    }
+  },
+  "cpus": 0.1,
+  "mem": 256,
+  "requirePorts": false,
+  "networks": [],
+  "healthChecks": [],
+  "fetch": [],
+  "constraints": [],
+  "id": "malloc1gb"
+}
