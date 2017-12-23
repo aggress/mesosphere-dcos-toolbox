@@ -1,0 +1,8 @@
+[masters]
+master
+
+[public-agents]
+public-agent
+
+[private-agents]
+private-agent

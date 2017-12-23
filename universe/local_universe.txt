@@ -1,2 +1,2 @@
 DCOS_VER=1.10
-PACKAGES="beta-datastax-dse:2.1.0-5.1.2-beta,beta-datastax-ops:2.1.0-6.1.2-beta,spark:1.0.6-2.0.2,kafka:1.1.16-0.10.0.0,elastic:2.0.2-5.6.2,elasticsearch:1.0.1-2,redis:3.2.9-0.0.1,kibana:2.0.2-5.6.2,logstash:2.3.4"
+PACKAGES="confluent-kafka:2.0.3-3.3.1e,marathon-lb:1.11.1,spark:2.1.0-2.2.0-1"
