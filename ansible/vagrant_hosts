@@ -1,0 +1,15 @@
+[masters]
+master
+
+[public-agents]
+public-agent
+
+[private-agents]
+private-agent
+
+[bootstrap]
+
+[dcos-cluster:children]
+masters
+public-agents
+private-agents
