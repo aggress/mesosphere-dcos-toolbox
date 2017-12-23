@@ -2,24 +2,18 @@
 - hosts: ["masters"]
   become: true
   tasks:
-  - name: Copy the Local Universe archive to the master
-    copy:
-      src: /tmp/dcos-local-universe/local-universe.tar.gz
-      dest: /tmp/local-universe.tar.gz
-
-  - name: Copy the Universe HTTP systemd file
-    copy:
+  - name: Move the Universe HTTP systemd file
+    file:
       src: /tmp/dcos-local-universe/dcos-local-universe-http.service
       dest: /etc/systemd/system/dcos-local-universe-http.service
 
-  - name: Copy the Universe registry systemd file
-    copy:
+  - name: Move the Universe registry systemd file
+    file:
       src: /tmp/dcos-local-universe/dcos-local-universe-registry.service
       dest: /etc/systemd/system/dcos-local-universe-registry.service
 
   - name: Load the Universe into the local Docker instance
-    shell: docker load < /tmp/local-universe.tar.gz
-    args:
+    shell: docker load < /tmp/dcos-local-universe/local-universe.tar.gz
 
   - name: Force systemd to reread configs
     systemd: daemon_reload=yes
