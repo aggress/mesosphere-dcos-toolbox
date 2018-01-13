@@ -1,15 +1,14 @@
 {
   "service": {
-    "name": "confluent-kafka",
-    "beta-optin": true,
+    "name": "kafka",
     "user": "root"
   },
   "brokers": {
-"count": 3,
+"count": 1,
 "disk_type": "ROOT"
   },
   "kafka": {
-"auto_create_topics_enable": false,
+"auto_create_topics_enable": true,
 "delete_topic_enable": true, 
 "offsets_retention_minutes": 20160
   }
