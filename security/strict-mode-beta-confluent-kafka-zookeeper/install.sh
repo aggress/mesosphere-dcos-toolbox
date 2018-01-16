@@ -60,7 +60,7 @@ dcos security org users grant beta-confluent-kafka-zookeeper dcos:mesos:master:r
 dcos security org users grant beta-confluent-kafka-zookeeper dcos:mesos:master:reservation:principal:beta-confluent-kafka-zookeeper delete
 dcos security org users grant beta-confluent-kafka-zookeeper dcos:mesos:master:volume:principal:beta-confluent-kafka-zookeeper create
 dcos security org users grant beta-confluent-kafka-zookeeper dcos:mesos:master:volume:principal:beta-confluent-kafka-zookeeper delete
-dcos security org users grant beta-confluent-kafka dcos:mesos:master:task:user:nobody create
+dcos security org users grant beta-confluent-kafka-zookeeper dcos:mesos:master:task:user:nobody create
 
 
 # Create a JSON options file with the new service account and secret
