@@ -27,7 +27,7 @@ rm -f *.pem
 rm -f *.json
 rm -f dcos-ca.crt
 
-dcos package install dcos-enterprise-cli --yes
+#dcos package install dcos-enterprise-cli --yes
 
 # Get the dcos_url
 dcos_url=$(dcos config show core.dcos_url)

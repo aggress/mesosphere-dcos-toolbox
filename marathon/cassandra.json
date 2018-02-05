@@ -1,9 +1,7 @@
 {
   "service": {
-    "name": "beta-cassandra",
-    "beta-optin": true
-  },
-  "nodes": {
-"count": 1
+    "name": "cassandra",
+    "data_center": "dc2",
+    "remote_seeds": "10.170.15.12:9042,10.170.15.15:9042"
 }
 }

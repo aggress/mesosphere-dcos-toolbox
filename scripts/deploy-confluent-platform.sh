@@ -102,11 +102,11 @@ EOF
 
 
 function control_center () {
-    c3_host=$(dcos marathon app show confluent-control-center | jq -r .tasks[0].host)
+    c3_host=$(dcos marathon app show control-center | jq -r .tasks[0].host)
     echo ${c3_host}
-    c3_port=$(dcos marathon app show confluent-control-center | jq -r .tasks[0].ports[0])
+    c3_port=$(dcos marathon app show control-center | jq -r .tasks[0].ports[0])
     echo   ${c3_port}
-    master=$(dcos cluster list --attached | tail -1 |  awk {'print $4'} | sed 's~http[s]*://~~g' | sed 's/.$//') # Don't judge me.
+    master=$(dcos cluster list --attached | tail -1 |  awk {'print $4'} | sed 's~http[s]*://~~g') # Don't judge me.
     ssh -N -L 9021:${c3_host}:${c3_port} ${ssh_user}@${master}
     echo "Open your browser on 127.0.0.1:9021 to access Confluent Control Center"
 }

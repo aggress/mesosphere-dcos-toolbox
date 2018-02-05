@@ -4,17 +4,17 @@
   tasks:
   - name: Copy the Local Universe archive to the master
     copy:
-      src: /tmp/dcos-local-universe/local-universe.tar.gz
+      src: ~/Downloads/local-universe.tar.gz
       dest: /tmp/local-universe.tar.gz
 
-  - name: Copy the Universe HTTP systemd file
-    copy:
-      src: /tmp/dcos-local-universe/dcos-local-universe-http.service
+  - name: Fetch the Universe HTTP systemd file
+    get_url:
+      url: https://raw.githubusercontent.com/mesosphere/universe/version-3.x/docker/local-universe/dcos-local-universe-http.service
       dest: /etc/systemd/system/dcos-local-universe-http.service
 
-  - name: Copy the Universe registry systemd file
-    copy:
-      src: /tmp/dcos-local-universe/dcos-local-universe-registry.service
+  - name: Fetch the Universe HTTP registry file
+    get_url:
+      url: https://raw.githubusercontent.com/mesosphere/universe/version-3.x/docker/local-universe/dcos-local-universe-registry.service
       dest: /etc/systemd/system/dcos-local-universe-registry.service
 
   - name: Load the Universe into the local Docker instance

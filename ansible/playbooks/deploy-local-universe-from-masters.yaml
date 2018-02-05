@@ -2,18 +2,23 @@
 - hosts: ["masters"]
   become: true
   tasks:
-  - name: Move the Universe HTTP systemd file
+  - name: Create directory for dcos-local-universe
     file:
-      src: /tmp/dcos-local-universe/dcos-local-universe-http.service
+      path: /home/centos/dcos-local-universe
+      state: directory
+
+  - name: Fetch the Universe HTTP systemd file
+    get_url:
+      url: https://raw.githubusercontent.com/mesosphere/universe/version-3.x/docker/local-universe/dcos-local-universe-http.service
       dest: /etc/systemd/system/dcos-local-universe-http.service
 
-  - name: Move the Universe registry systemd file
-    file:
-      src: /tmp/dcos-local-universe/dcos-local-universe-registry.service
+  - name: Fetch the Universe HTTP registry file
+    get_url:
+      url: https://raw.githubusercontent.com/mesosphere/universe/version-3.x/docker/local-universe/dcos-local-universe-registry.service
       dest: /etc/systemd/system/dcos-local-universe-registry.service
 
   - name: Load the Universe into the local Docker instance
-    shell: docker load < /tmp/dcos-local-universe/local-universe.tar.gz
+    shell: docker load < /tmp/local-universe.tar.gz
 
   - name: Force systemd to reread configs
     systemd: daemon_reload=yes
