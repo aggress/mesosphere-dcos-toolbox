@@ -1,0 +1,85 @@
+---
+- hosts: ["masters"]
+  become: true
+  tasks:
+  - name: Create directory for dcos-local-universe
+    file:
+      path: /home/centos/dcos-local-universe
+      state: directory
+
+  - name: Fetch the local universe from S3
+    get_url:
+      url: https://<S3 PATH>
+      dest: /home/centos/dcos-local-universe/local-universe.tar.gz
+
+  - name: Fetch the Universe HTTP systemd file
+    get_url:
+      url: https://raw.githubusercontent.com/mesosphere/universe/version-3.x/docker/local-universe/dcos-local-universe-http.service
+      dest: /etc/systemd/system/dcos-local-universe-http.service
+
+  - name: Fetch the Universe HTTP registry file
+    get_url:
+      url: https://raw.githubusercontent.com/mesosphere/universe/version-3.x/docker/local-universe/dcos-local-universe-registry.service
+      dest: /etc/systemd/system/dcos-local-universe-registry.service
+
+  - name: Load the Universe into the local Docker instance
+    shell: docker load < /home/centos/dcos-local-universe/local-universe.tar.gz
+
+  - name: Force systemd to reread configs
+    systemd: daemon_reload=yes
+
+  - name: Start the Universe HTTP Service
+    systemd:
+      name: dcos-local-universe-http.service
+      state: started
+      enabled: True
+
+  - name: Start the Universe Registry Service
+    systemd:
+      name: dcos-local-universe-registry.service
+      state: started
+      enabled: True
+
+- hosts: 127.0.0.1
+  connection: local
+  become_user: richard
+  tasks:
+  - name: Remove the existing Universe if it exists
+    shell: dcos package repo remove Universe
+    ignore_errors: yes
+
+  - name: Add a reference to the new Local Universe
+    shell: dcos package repo add local-universe http://master.mesos:8082/repo
+
+- hosts: ["private-agents","public-agents"]
+  become: true
+  tasks:
+  - name: Create directory for certificate
+    file:
+      path: /etc/docker/certs.d/master.mesos:5000
+      state: directory
+
+  - name: Download the certificate
+    get_url:
+      url: http://master.mesos:8082/certs/domain.crt
+      dest: /etc/docker/certs.d/master.mesos:5000/ca.crt
+
+  - name: Reload Docker
+    systemd:
+      name: docker
+      state: reloaded
+
+  - name: Create the certs dir if it doesn't exist
+    file: 
+      path: /var/lib/dcos/pki/tls/certs/
+      state: directory
+
+  - name: Copy the Docker ca.crt to the dcos certs directory
+    get_url:
+      url: http://master.mesos:8082/certs/domain.crt
+      dest: /var/lib/dcos/pki/tls/certs/docker-registry-ca.crt
+
+  - name: Generate a hash and symlink
+    shell: ln -s /var/lib/dcos/pki/tls/certs/docker-registry-ca.crt /var/lib/dcos/pki/tls/certs/$(openssl x509 -hash -noout -in docker-registry-ca.crt).0
+    args:
+      chdir: /var/lib/dcos/pki/tls/certs/
