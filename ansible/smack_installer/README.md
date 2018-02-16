@@ -42,10 +42,13 @@ Three stage design
 - Setup: Generate the JSON options and any AD configuration
 - Deploy: Deploy the service
 
+Ansible does the heavy lifting and talks over localhost directly to the DC/OS CLI which then deploys frameworks. Really, all this is doing is automating all the steps you'd need to perform manually.
+
 ## Tooling
 
 - Ansible <3
 - aws-shell
+- DC/OS CLI
 
 ## Setup
 
