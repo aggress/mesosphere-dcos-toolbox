@@ -1,7 +1,7 @@
 
 # SMACK Stack Installer For DC/OS
 
-Semi-automated installation of big data frameworks for DC/OS
+Semi-automated installation of big data frameworks for DC/OS.
 
 ## Introduction
 
@@ -9,7 +9,7 @@ I needed to automate the installation of Confluent Platform with Kerberos and TL
 
 That began as a 100 line shell script, and I said to myself, once this works as a prototype, I'll rebuild in Ansible.
 
-500 lines of shell script later.. drowning in fragile confitionals with poor validation, I scrapped it and rewrote in Ansible.
+500 lines of shell script later.. drowning in fragile conditionals with poor validation, I scrapped it and rewrote in Ansible.
 
 Which I should have done from the very start. So here we are.
 
@@ -38,9 +38,9 @@ Which I should have done from the very start. So here we are.
 
 Three stage design
 
-Parameters - configure parameters for the cluster you're going to deploy
-Setup - Generate the JSON options and any AD configuration
-Deploy - Deploy the service
+- Parameters: Configure parameters for the cluster you're going to deploy
+- Setup: Generate the JSON options and any AD configuration
+- Deploy: Deploy the service
 
 ## Tooling
 
@@ -52,14 +52,16 @@ Deploy - Deploy the service
 Instructions below are for macOS. 
 
 ### Ansible
-
-`$ brew install ansible`
+```
+$ brew install ansible
+```
 
 ### AWS shell
 
 If you want to launch the AD server programmatically
-
-`$ brew install awscli`
+```
+$ brew install awscli
+```
 
 Add your AWS secret and key with `$ aws configure` or edit the `~/aws/credentials` directly
 
@@ -69,12 +71,12 @@ If you're using brew, you may have multiple versions of Python on your system in
 Ansible calls `/usr/bin/python`, so any required modules need to be installed in its context.
 Why the strange param when installing boto3? https://github.com/PokemonGoF/PokemonGo-Bot/issues/245.
 ..Working through all the **** so you don't have to.
-
-`$ sudo /usr/bin/python -m easy_install pip`
-`$ sudo /usr/bin/python -m pip install boto3 --ignore-installed six`
-`$ sudo /usr/bin/python -m pip install boto`
-`$ sudo /usr/bin/python -m pip install cryptography`
-
+```
+$ sudo /usr/bin/python -m easy_install pip
+$ sudo /usr/bin/python -m pip install boto3 --ignore-installed six
+$ sudo /usr/bin/python -m pip install boto
+$ sudo /usr/bin/python -m pip install cryptography
+```
 ## DC/OS CLI
 
 https://docs.mesosphere.com/1.10/cli/install/#manually-installing-the-cli
