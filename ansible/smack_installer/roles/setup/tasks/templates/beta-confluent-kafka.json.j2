@@ -1,0 +1,11 @@
+{
+    "service": {
+        "name": "{{ package }}"
+    },
+    "kafka": {
+        "kafka_zookeeper_uri": {{ zk_endpoints }},
+        "auto_create_topics_enable": true,
+        "delete_topic_enable": true,
+        "confluent_support_metrics_enable": true
+    }
+}

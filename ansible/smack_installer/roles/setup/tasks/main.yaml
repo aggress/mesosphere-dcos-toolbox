@@ -1,0 +1,4 @@
+---
+- set_fact: package="{{ package_to_install }}"
+- import_tasks: build_ad_content.yaml
+- import_tasks: options_json.yaml

@@ -1,0 +1,24 @@
+---
+- name: Checking for roles/setup/tasks/output/{{ kafka_cluster_identifier}}-zookeeper.keytab
+  stat:
+    path: roles/setup/tasks/output/{{ kafka_cluster_identifier}}-zookeeper.keytab
+  register: zookeeper_keytab
+- fail:
+    msg: "roles/setup/tasks/output/{{ kafka_cluster_identifier}}-zookeeper.keytab does not exist"
+  when: zookeeper_keytab.stat.exists == False
+
+- name: Checking for roles/setup/tasks/output/{{ kafka_cluster_identifier}}-brokers.keytab
+  stat:
+    path: roles/setup/tasks/output/{{ kafka_cluster_identifier}}-brokers.keytab
+  register: brokers_keytab
+- fail:
+    msg: "roles/setup/tasks/output/{{ kafka_cluster_identifier}}-brokers.keytab does not exist"
+  when: brokers_keytab.stat.exists == False
+
+- name: Checking for roles/setup/tasks/output/{{ kafka_cluster_identifier}}-clients.keytab
+  stat:
+    path: roles/setup/tasks/output/{{ kafka_cluster_identifier}}-clients.keytab
+  register: clients_keytab
+- fail:
+    msg: "roles/setup/tasks/output/{{ kafka_cluster_identifier}}-clients.keytab does not exist"
+  when: clients_keytab.stat.exists == False

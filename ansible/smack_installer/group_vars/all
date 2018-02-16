@@ -1,0 +1,55 @@
+---
+# AD hostname
+ad_hostname: 
+
+# DC/OS security mode: Values: disabled, permissive, strict
+security: permissive
+
+# Kafka Kerberos and TLS enabled. Values: true or false
+all_the_security: true
+
+# Kafka cluster identifier: In a multi-tenant environment you'll want a unique name for each component and stack
+# eg. beta-confluent-kafka-dev0, cl3453-kafka. This will be used for naming AD credentials and clusters.
+kafka_cluster_identifier: cl3453
+
+# AD user password: For testing purposes these can all be the same
+ad_user_password: 
+
+# Kerberos Realm
+realm: ad.mesosphere.com
+
+
+#### CloudFormation Active Directory Specific Paramters
+
+# AWS region: e.g. us-west-2
+aws_region: us-west-2
+
+# AD DomainNetBIOSName
+ad_netbios_name: ad
+
+# SourceCidrForRDP: IP CIDR for access to AD RDP
+access_cidr: 0.0.0.0/0
+
+# EC2 Keypair
+ec2_keypair: 
+
+#### Other
+
+# SSH user
+ssh_user: core
+
+path_tmp: "/tmp"
+
+beta_packages: [ 'beta-confluent-kafka-zookeeper', 'beta-confluent-kafka', 'confluent-connect', 'confluent-schema-registry', 'confluent-replicator', 'confluent-control-center' ]
+
+packages: [ 'confluent-kafka-zookeeper', 'confluent-kafka', 'confluent-connect', 'confluent-schema-registry', 'confluent-replicator', 'confluent-control-center' ]
+
+##### NOT USED YET
+
+# Number of Zookeeper nodes - 3/5/7
+zk_nodes: 3
+
+# Number of Kafka brokers - 3/5/7
+kafka_brokers: 3
+
+

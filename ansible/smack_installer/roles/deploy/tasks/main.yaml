@@ -1,0 +1,6 @@
+---
+- set_fact: package="{{ package_to_install }}"
+- import_tasks: check_keytabs.yaml
+- import_tasks: check_dcos_enterprise_cli.yaml
+- import_tasks: security.yaml
+- import_tasks: install.yaml
