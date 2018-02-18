@@ -3,6 +3,11 @@
   connection: local
   #set_fact: ad_action="{{  }}"
   tasks:
+
+  - name: Build the AD CloudFormation template in the output directory
+      template: src=templates/active_directory_cloudformation_template.json.j2 dest=roles/setup/tasks/output/active_directory_cloudformation_template.json
+    when: ad_action == "deploy"
+
   - name: Launch Active Directory CloudFormation Stack
     cloudformation:
       stack_name: "Active-Directory-{{ ansible_user_id }}"
@@ -11,7 +16,6 @@
       disable_rollback: true
       template: "../../setup/tasks/output/active_directory_cloudformation_template.json"
     when: ad_action == "deploy"
-
 
   - name: Destroy Active Directory CloudFormation Stack
     cloudformation:

@@ -1,6 +1,6 @@
 ---
 # AD hostname
-ad_hostname: 
+ad_hostname: ad.mesosphere.com
 
 # DC/OS security mode: Values: disabled, permissive, strict
 security: permissive
@@ -13,7 +13,7 @@ all_the_security: true
 kafka_cluster_identifier: cl3453
 
 # AD user password: For testing purposes these can all be the same
-ad_user_password: 
+ad_user_password: MesosphereAD2018
 
 # Kerberos Realm
 realm: ad.mesosphere.com
@@ -31,9 +31,11 @@ ad_netbios_name: ad
 access_cidr: 0.0.0.0/0
 
 # EC2 Keypair
-ec2_keypair: 
+ec2_keypair: rshaw-uswest2
+
 
 #### Other
+
 
 # SSH user
 ssh_user: core

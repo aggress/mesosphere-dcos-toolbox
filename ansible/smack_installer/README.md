@@ -56,17 +56,18 @@ Instructions below are for macOS.
 
 ### Ansible
 ```
-$ brew install ansible
+brew install ansible
 ```
 
 ### AWS shell
 
 If you want to launch the AD server programmatically
+
 ```
-$ brew install awscli
+brew install awscli
 ```
 
-Add your AWS secret and key with `$ aws configure` or edit the `~/aws/credentials` directly
+Add your AWS secret and key with `aws configure` or edit the `~/aws/credentials` directly
 
 ### Python modules for some of the more esoteric Ansible activities
 
@@ -74,42 +75,100 @@ If you're using brew, you may have multiple versions of Python on your system in
 Ansible calls `/usr/bin/python`, so any required modules need to be installed in its context.
 Why the strange param when installing boto3? https://github.com/PokemonGoF/PokemonGo-Bot/issues/245.
 ..Working through all the **** so you don't have to.
+
 ```
-$ sudo /usr/bin/python -m easy_install pip
-$ sudo /usr/bin/python -m pip install boto3 --ignore-installed six
-$ sudo /usr/bin/python -m pip install boto
-$ sudo /usr/bin/python -m pip install cryptography
+sudo /usr/bin/python -m easy_install pip
+sudo /usr/bin/python -m pip install boto3 --ignore-installed six
+sudo /usr/bin/python -m pip install boto
+sudo /usr/bin/python -m pip install cryptography
 ```
-## DC/OS CLI
+### DC/OS CLI
 
 https://docs.mesosphere.com/1.10/cli/install/#manually-installing-the-cli
 
+### RDP client
+```
+brew cask install rdp
+```
 
-## Usage
+## General Usage
 
 Checkout this repository 
 ```
-$ git clone @github.com:aggress/mesosphere-dcos-toolbox.git
+git clone @github.com:aggress/mesosphere-dcos-toolbox.git
 ```
 Change to the project directory
 ```
-$ cd mesosphere-dcos-toolbox/ansible/smack_installer
+cd mesosphere-dcos-toolbox/ansible/smack_installer
 ```
-Edit `group_vars/all` this contains a list of configuration options you must review
+Edit `group_vars/all` this contains a list of configuration options you must setup before moving forwards
 
-Edit the framework configuration section as it applies to what you deploy and the AD section if you need it for testing
+Edit the framework configuration section as it applies to what you deploy and the AD section if you need it for testing.
 
 Configure the DC/OS cli to attach to your target cluster 
+
 ```
-$ dcos cluster setup --insecure <master_ip> --username=<username> --password=<password>
+dcos cluster setup --insecure <master_ip> --username=<username> --password=<password>
 ```
+
 Test the DC/OS cli `dcos node`
 
-Run `$ make` with no options to review the options
+Run `make` with no options to review the options.
 
-Run `$ make` with the option you want i.e. `$ make deploy_beta_cp_zk`
+If you need a test AD server you must read the Active Directory setup notes below, then spin up AD with
+```
+make adup
+```
+Configure a service for deployment
 
-Watch Ansible do its magic
+```
+make setup_beta_cp_zk strict secure
+```
+
+Now if you're using the test AD server, all the credentials management is done for you. If this is an existing AD server, you will need to copy the generated `create_keytabs.bat` onto the AD server, run it and copy off the generated keytabs back into `roles/setup/tasks/output`.
+
+Deploy the new service with
+
+```
+make deploy_beta_cp_zk 
+```
+
+Watch Ansible do its magic and your new service is deployed.
+
+## Active Directory
+
+If you don't have an existing Active Directory (AD) server to hand, this can also spin one up on AWS using CloudFormation. AD is used to manage users, principals and create the keytabs, which you then must download from the AD server for the services to authenticate with. I've not quite yet cracked a fully automated solution for this process, so there is a need for an initial connection to the Windows desktop using RDP. 
+
+### Workflow
+
+To stand up the AD server, ensure you edit the `group_vars/all` Active Directory section as these are deployment specific variables, then run
+
+```
+make adup
+```
+This builds a Windows 2008 R2 AD server and spits out the public DNS name and the Administrator password - thereby saving one step on the AWS console. Use these credentials to create a new RDP session and connect. 
+
+Copy the contents of `templates/windows_install_openssh.bat` to the clipboard
+
+Open a Powershell command window (this is powershell 3 btw) and paste in the contents. On the Mac I use the two fingers on the trackpad approach. This'll install Microsoft's own port of OpenSSH, start the service and open the firewall port.  We already configured the inbound security group rule via CloudFormation.
+
+Now you can close the RDP connection and test SSH
+
+```
+ssh Administrator@<AD hostname>
+```
+
+Et voila. Just like having a Linux server at the backend and we don't have to RDP in each time to create new credentials for a service. When finished with AD, you can tear the stack down with
+
+```
+make addown
+```
+
+If you need to get the AD hostname and Administrator password again
+
+```
+make adfacts
+```
 
 ## Todo
 

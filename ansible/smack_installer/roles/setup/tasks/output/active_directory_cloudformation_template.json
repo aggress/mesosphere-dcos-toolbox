@@ -5,7 +5,7 @@
         "KeyName": {
             "Description": "Name of an existing EC2 KeyPair",
             "Type": "AWS::EC2::KeyPair::KeyName",
-            "Default": "{{ ec2_keypair }}",
+            "Default": "rshaw-uswest2",
             "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
         },
         "InstanceType": {
@@ -72,7 +72,7 @@
             "Type": "String",
             "MinLength": "3",
             "MaxLength": "25",
-            "Default": "{{ realm }}",
+            "Default": "ad.mesosphere.com",
             "AllowedPattern": "[a-zA-Z0-9]+\\..+"
         },
         "DomainNetBIOSName": {
@@ -88,7 +88,7 @@
             "Type": "String",
             "MinLength": "8",
             "MaxLength": "32",
-            "Default": "{{ ad_user_password }}",
+            "Default": "MesosphereAD2018",
             "AllowedPattern": "(?=^.{6,255}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*",
             "NoEcho": "True"
         },
@@ -97,7 +97,7 @@
             "Type": "String",
             "MinLength": "9",
             "MaxLength": "18",
-            "Default": "{{ access_cidr }}",
+            "Default": "0.0.0.0/0",
             "AllowedPattern": "^([0-9]+\\.){3}[0-9]+\\/[0-9]+$"
         }
     },
@@ -420,14 +420,6 @@
                             "Ref": "DomainMemberSecurityGroup"
                         }
                     },
-                      {
-                        "IpProtocol": "tcp",
-                        "FromPort": "22",
-                        "ToPort": "22",
-                        "CidrIp": {
-                            "Ref": "SourceCidrForRDP"
-                        }
-                    },
                     {
                         "IpProtocol": "udp",
                         "FromPort": "53",
@@ -440,16 +432,16 @@
                         "IpProtocol": "tcp",
                         "FromPort": "88",
                         "ToPort": "88",
-                        "CidrIp": {
-                            "Ref": "SourceCidrForRDP"
+                        "SourceSecurityGroupName": {
+                            "Ref": "DomainMemberSecurityGroup"
                         }
                     },
                     {
                         "IpProtocol": "udp",
                         "FromPort": "88",
                         "ToPort": "88",
-                        "CidrIp": {
-                            "Ref": "SourceCidrForRDP"
+                        "SourceSecurityGroupName": {
+                            "Ref": "DomainMemberSecurityGroup"
                         }
                     },
                     {

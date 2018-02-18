@@ -15,6 +15,3 @@
 
 - name: Build the krb5.conf in the output directory
   template: src=templates/krb5.conf.j2 dest=roles/setup/tasks/output/krb5.conf
-
-- name: Build the AD CloudFormation template in the output directory
-  template: src=templates/active_directory_cloudformation_template.json.j2 dest=roles/setup/tasks/output/active_directory_cloudformation_template.json

@@ -1,0 +1,19 @@
+{
+  "service": {
+    "name": "cl3453-beta-confluent-kafka-zookeeper",
+    "service_account": "cl3453-beta-confluent-kafka-zookeeper",
+    "service_account_secret": "cl3453-beta-confluent-kafka-zookeeper/private-key",
+    "security": {
+      "kerberos": {
+        "debug": true,
+        "enabled": true,
+        "realm": "ad.mesosphere.com",
+        "keytab_secret": "__dcos_base64__cl3453_zookeeper_keytab",
+        "kdc": {
+          "hostname": "ad.mesosphere.com",
+          "kdc": "88" 
+        }
+      }
+    }
+  }
+}
