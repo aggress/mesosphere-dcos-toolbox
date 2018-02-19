@@ -41,19 +41,19 @@ ad-deploy:
 	ansible-playbook -i hosts roles/deploy/tasks/ad_cloudformation_stack.yaml -e "ad_action=deploy"
 
 ad-facts:
-	$(ANSIBLECMD) roles/deploy/tasks/ad_cloudformation_stack.yaml -e "ad_action=facts"
+	ansible-playbook -i hosts roles/deploy/tasks/ad_cloudformation_stack.yaml -e "ad_action=facts"
 
 ad-destroy:
-	$(ANSIBLECMD) roles/deploy/tasks/ad_cloudformation_stack.yaml -e "ad_action=destroy"
+	ansible-playbook -i hosts roles/deploy/tasks/ad_cloudformation_stack.yaml -e "ad_action=destroy"
 
 setup-beta-cp-zk:
-	$(ANSIBLECMD) setup.yaml -e "package_to_install=beta-confluent-kafka-zookeeper"
+	ansible-playbook -i hosts setup.yaml -e "package_to_install=beta-confluent-kafka-zookeeper"
 
 deploy-beta-cp-zk:
-	$(ANSIBLECMD) deploy.yaml -e "package_to_install=beta-confluent-kafka-zookeeper"
+	ansible-playbook -i hosts deploy.yaml -e "package_to_install=beta-confluent-kafka-zookeeper"
 
 setup-beta-cp-kafka:
-	$(ANSIBLECMD) setup.yaml -e "package_to_install=beta-confluent-kafka"
+	ansible-playbook -i hosts setup.yaml -e "package_to_install=beta-confluent-kafka"
 
 deploy-beta-cp-kafka:
-	$(ANSIBLECMD) deploy.yaml -e "package_to_install=beta-confluent-kafka"
+	ansible-playbook -i hosts deploy.yaml -e "package_to_install=beta-confluent-kafka"
