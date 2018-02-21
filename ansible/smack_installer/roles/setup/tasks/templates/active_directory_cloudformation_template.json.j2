@@ -80,7 +80,7 @@
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "15",
-            "Default": "ad",
+            "Default": "{{ ad_netbios_name }}",
             "AllowedPattern": "[a-zA-Z0-9]+"
         },
         "RestoreModePassword": {
@@ -98,6 +98,14 @@
             "MinLength": "9",
             "MaxLength": "18",
             "Default": "{{ access_cidr }}",
+            "AllowedPattern": "^([0-9]+\\.){3}[0-9]+\\/[0-9]+$"
+        },
+        "SourceCidrForKerberos": {
+            "Description": "IP Cidr from which you are likely to access Kerberos on TCP/UDP 88 e.g. 54.32.98.160/32",
+            "Type": "String",
+            "MinLength": "9",
+            "MaxLength": "18",
+            "Default": "{{ kerberos_cidr }}",
             "AllowedPattern": "^([0-9]+\\.){3}[0-9]+\\/[0-9]+$"
         }
     },
@@ -441,7 +449,7 @@
                         "FromPort": "88",
                         "ToPort": "88",
                         "CidrIp": {
-                            "Ref": "SourceCidrForRDP"
+                            "Ref": "SourceCidrForKerberos"
                         }
                     },
                     {
@@ -449,7 +457,7 @@
                         "FromPort": "88",
                         "ToPort": "88",
                         "CidrIp": {
-                            "Ref": "SourceCidrForRDP"
+                            "Ref": "SourceCidrForKerberos"
                         }
                     },
                     {

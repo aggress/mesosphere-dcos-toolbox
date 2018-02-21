@@ -2,9 +2,9 @@ KafkaClient {
     com.sun.security.auth.module.Krb5LoginModule required
     doNotPrompt=true
     useTicketCache=true
-    principal="client@{{ realm }}"
+    principal="client@{{ realm|upper }}"
     useKeyTab=true
     serviceName="{{ kafka_cluster_identifier }}"
-    keyTab="/tmp/richard/{{ kafka_cluster_identifier }}-clients.keytab"
+    keyTab="/tmp/kafkatest/{{ kafka_cluster_identifier }}-clients.keytab"
     client=true;
 };

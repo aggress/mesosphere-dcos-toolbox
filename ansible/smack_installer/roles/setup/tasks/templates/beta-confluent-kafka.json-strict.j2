@@ -5,7 +5,7 @@
         "service_account_secret": "{{ kafka_cluster_identifier }}-{{ package }}/private-key"
     },
     "kafka": {
-        "kafka_zookeeper_uri": "{{ zk_endpoints }}",
+        "kafka_zookeeper_uri": "{{ zk_endpoints.stdout }}",
         "auto_create_topics_enable": true,
         "delete_topic_enable": true,
         "confluent_support_metrics_enable": true

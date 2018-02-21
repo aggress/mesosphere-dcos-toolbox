@@ -7,29 +7,15 @@
   command: dcos security org service-accounts create -p roles/setup/tasks/output/{{ kafka_cluster_identifier }}-{{ package }}-public.pem -d "{{ kafka_cluster_identifier }}-{{ package }} service account" {{ kafka_cluster_identifier }}-{{ package }}
   when: ( all_the_security == true ) or ( security == "strict" )
 
-- name: # Create a secret to hold the private key
+- name: Create a secret to hold the private key for strict
   command: dcos security secrets create-sa-secret --strict roles/setup/tasks/output/{{ kafka_cluster_identifier }}-{{ package }}-private.pem {{ kafka_cluster_identifier }}-{{ package }} {{ kafka_cluster_identifier }}-{{ package }}/private-key
-  when: ( all_the_security == true ) or ( security == "strict" )
+  when: ( all_the_security == true ) and ( security == "strict" )
+
+- name: Create a secret to hold the private key for permissive
+  command: dcos security secrets create-sa-secret roles/setup/tasks/output/{{ kafka_cluster_identifier }}-{{ package }}-private.pem {{ kafka_cluster_identifier }}-{{ package }} {{ kafka_cluster_identifier }}-{{ package }}/private-key
+  when: ( all_the_security == true ) and ( security == "permissive" )
 
 - command: dcos security cluster ca newcert --cn test --host test
-  when: all_the_security == true
-
-- command: base64 -i roles/setup/tasks/output/{{ kafka_cluster_identifier }}-brokers.keytab -o roles/setup/tasks/output/{{ kafka_cluster_identifier }}-brokers.keytab.base64
-  when: all_the_security == true
-
-- command: dcos security secrets create  __dcos_base64__{{ kafka_cluster_identifier }}_brokers_keytab --value-file roles/setup/tasks/output/{{ kafka_cluster_identifier }}-brokers.keytab.base64
-  when: all_the_security == true
-
-- command: base64 -i roles/setup/tasks/output/{{ kafka_cluster_identifier }}-zookeeper.keytab -o roles/setup/tasks/output/{{ kafka_cluster_identifier }}-zookeeper.keytab.base64
-  when: all_the_security == true
-
-- command: dcos security secrets create  __dcos_base64__{{ kafka_cluster_identifier }}_zookeeper_keytab --value-file roles/setup/tasks/output/{{ kafka_cluster_identifier }}-zookeeper.keytab.base64
-  when: all_the_security == true
-
-- command: base64 -i roles/setup/tasks/output/{{ kafka_cluster_identifier }}-clients.keytab -o roles/setup/tasks/output/{{ kafka_cluster_identifier }}-clients.keytab.base64
-  when: all_the_security == true
-
-- command: dcos security secrets create  __dcos_base64__{{ kafka_cluster_identifier }}_clients_keytab --value-file roles/setup/tasks/output/{{ kafka_cluster_identifier }}-clients.keytab.base64
   when: all_the_security == true
 
 # Nasty for DC/OS 1.10 only due to file based secrets

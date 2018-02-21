@@ -1,6 +1,6 @@
 ---
 - name: Check for Zookeeper endpoints
-  command: dcos beta-confluent-kafka-zookeeper --name={{ kafka_cluster_identifier }}-beta-confluent-kafka-zookeeper endpoint clientport | jq -r .dns[] | paste -sd, -
+  shell: dcos beta-confluent-kafka-zookeeper --name={{ kafka_cluster_identifier }}-beta-confluent-kafka-zookeeper endpoint clientport | jq -r .dns[] | paste -sd, -
   register: zk_endpoints
   when: package == "confluent-connect" or package == "confluent-schema-registry" or package == "confluent-replicator" or package == "beta-confluent-kafka" or package == "confluent-kafka"
 

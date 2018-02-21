@@ -144,7 +144,7 @@ If you don't have an existing Active Directory (AD) server to hand, this can als
 To stand up the AD server, ensure you edit the `group_vars/all` Active Directory section as these are deployment specific variables, then run
 
 ```
-make adup
+make ad-deploy
 ```
 This builds a Windows 2008 R2 AD server and spits out the public DNS name and the Administrator password - thereby saving one step on the AWS console. Use these credentials to create a new RDP session and connect. 
 
@@ -174,4 +174,15 @@ make adfacts
 
 - Docs for AD testing
 - All the other things
+
+
+## 
+
+make setup-cp-beta-zk
+
+make ad-deploy
+
+make get-keytabs
+
+make deploy-cp-beta-zk
 

@@ -1,16 +1,20 @@
 
 BUILDDIR = "roles/setup/tasks/output"
+.DEFAULT_GOAL := help
 
 .PHONY: addup addown help
 
 help:
 	@echo ""
-	@echo "Please use \`make <target>' where <target> is one of"
+	@echo "Please use \`make <target>' where <target> is one of:"
 	@echo ""
 	@echo "  clean                  to remove existing build artifacts"
 	@echo "  ad-deploy              to deploy an Active Directory server on AWS"
 	@echo "  ad-facts               to get the public DNS name and Administrator password for the AD server on AWS"
 	@echo "  ad-destroy             to destroy the AWS Active Directory server"
+	@echo "  get-keytabs            to create and get the keytabs from the AWS Active Directory server"
+	@echo "  setup-client-master    to send creds and configs to a master for client-server testing"
+	@echo "  dcos-build             to terraform and build a DC/OS cluster using Ansible"
 	@echo "  ======================="
 	@echo "  setup-beta-cp-zk       to setup Beta Confluent Platform Zookeeper"
 	@echo "  setup-cp-zk            to setup GA Confluent Platform Zookeeper"
@@ -46,6 +50,23 @@ ad-facts:
 ad-destroy:
 	ansible-playbook -i hosts roles/deploy/tasks/ad_cloudformation_stack.yaml -e "ad_action=destroy"
 
+get-keytabs:
+	ansible-playbook -vvv -i hosts roles/deploy/tasks/check_dcos_enterprise_cli.yaml
+	ansible-playbook -vvv -i hosts roles/deploy/tasks/get_keytabs.yaml
+
+setup-client-master:
+	ansible-playbook -vvv -i hosts roles/deploy/tasks/setup_client_master.yaml
+
+dcos-build:
+	cd ~/code/terraform-ansible-dcos; \
+	  terraform init; \
+	  terraform get; \
+	  terraform apply -auto-approve; \
+	  sleep 30; \
+	  bash ansibilize.sh
+	cd ~/code/dcos-ansible ;\
+	  ansible-playbook -i hosts -u centos -b main.yaml
+
 setup-beta-cp-zk:
 	ansible-playbook -i hosts setup.yaml -e "package_to_install=beta-confluent-kafka-zookeeper"
 
@@ -57,3 +78,4 @@ setup-beta-cp-kafka:
 
 deploy-beta-cp-kafka:
 	ansible-playbook -i hosts deploy.yaml -e "package_to_install=beta-confluent-kafka"
+

@@ -7,7 +7,7 @@
             "kerberos": {
                 "debug": true,
                 "enabled": true,
-                "realm": {{ realm }},
+                "realm": {{ realm|upper }},
                 "keytab_secret": "__dcos_base64__{{ kafka_cluster_identifier }}_brokers_keytab",
                 "kdc": {
                     "hostname": "{{ ad_hostname }}",

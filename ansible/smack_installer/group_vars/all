@@ -1,8 +1,8 @@
 ---
-# AD hostname
-ad_hostname: ad.mesosphere.com
+# AD hostname: If this is AD on AWS for testing, will require the public DNS name
+ad_hostname:
 
-# DC/OS security mode: Values: disabled, permissive, strict
+# DC/OS security mode: disabled, permissive, strict
 security: permissive
 
 # Kafka Kerberos and TLS enabled. Values: true or false
@@ -18,27 +18,39 @@ ad_user_password: MesosphereAD2018
 # Kerberos Realm
 realm: ad.mesosphere.com
 
+# Toggle AWS AD testing for keytab generation e.g. true | false
+aws_ad: true
 
-#### CloudFormation Active Directory Specific Paramters
+# SSH user
+ssh_user: centos
+
+
+#################### 
+# CloudFormation Active Directory Specific Paramters
+#################### 
 
 # AWS region: e.g. us-west-2
 aws_region: us-west-2
 
 # AD DomainNetBIOSName
-ad_netbios_name: ad
-
-# SourceCidrForRDP: IP CIDR for access to AD RDP
-access_cidr: 0.0.0.0/0
+ad_netbios_name: AD
 
 # EC2 Keypair
 ec2_keypair: rshaw-uswest2
 
+# SourceCidrForRDP: IP CIDR for access to AD RDP and SSH: eg. 0.0.0.0/0 or 192.168.1.2/32
+access_cidr: 192.168.1.2/32
 
-#### Other
+# SourceCidrForKerberos: IP CIDR for access to Kerberos on TCP/UDP 88 e.g. eg. 0.0.0.0/0 or 192.168.1.2/32
+kerberos_cidr: 0.0.0.0/0
+
+# Auto Launch xfreerdp after AWS AD has been built: true | false
+auto_xfreerdp: true
 
 
-# SSH user
-ssh_user: core
+#################### 
+# Other
+#################### 
 
 path_tmp: "/tmp"
 

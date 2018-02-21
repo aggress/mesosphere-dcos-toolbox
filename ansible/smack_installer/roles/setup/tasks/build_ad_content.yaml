@@ -1,11 +1,14 @@
 ---
-- name: Build the create_keytabs batch script in the output directory
-  template: src=templates/create_keytabs.bat.j2 dest=roles/setup/tasks/output/create_keytabs.bat
-  when: package == "confluent-kafka-zookeeper"
+- set_fact:
+    beta_or_ga: beta-confluent
+  when: package == "beta-confluent-kafka-zookeeper" or package == "beta-confluent-kafka"
+
+- set_fact:
+    beta_or_ga: confluent
+  when: package == "confluent-kafka-zookeeper" or package == "confluent-kafka-zookeeper"
 
 - name: Build the create_keytabs batch script in the output directory
-  template: src=templates/create_keytabs.bat-beta.j2 dest=roles/setup/tasks/output/create_keytabs.bat
-  when: package == "beta-confluent-kafka-zookeeper"
+  template: src=templates/create_keytabs.bat.j2 dest=roles/setup/tasks/output/create-keytabs.bat
 
 - name: Build the client-jaas.conf in the output directory
   template: src=templates/client-jaas.conf.j2 dest=roles/setup/tasks/output/client-jaas.conf

@@ -4,7 +4,7 @@
     admin_server = STDERR
 
 [libdefaults]
-    default_realm = {{ realm }}
+    default_realm = {{ realm|upper }}
     dns_lookup_realm = false
     dns_lookup_kdc = false
     ticket_lifetime = 24h
@@ -12,10 +12,10 @@
     forwardable = true
 
 [realms]
-    {{ realm }} = {
+    {{ realm|upper }} = {
         kdc = {{ ad_hostname }}:88
     }
 
 [domain_realm]
-    .{{ kafka_cluster_identifier }}.autoip.dcos.thisdcos.directory = {{ ad_hostname }}
-    {{ kafka_cluster_identifier }}.autoip.dcos.thisdcos.directory = {{ ad_hostname }}
+    .{{ kafka_cluster_identifier }}-{{ beta_or_ga }}-kafka.autoip.dcos.thisdcos.directory = {{ realm|upper }}
+    {{ kafka_cluster_identifier }}-{{ beta_or_ga }}-kafka.autoip.dcos.thisdcos.directory = {{ realm|upper }}

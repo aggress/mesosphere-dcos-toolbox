@@ -14,12 +14,12 @@ powershell.exe -ExecutionPolicy Bypass -File c:\progra~1\OpenSSH-Win64\install-s
 
 netsh advfirewall firewall add rule name=sshd dir=in action=allow protocol=TCP localport=22
 
-net start sshd
-
 mkdir C:\Users\Administrator\.ssh
 
-echo ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtvS/He/8IexJHjQ6bLnb6r2yQGERHZe5fArddb+IifJC40KYZx9dbC3g1YzLObo7G5REnQA/j8uy94vK9HJOEH+QBpfBlFp/8T+/m56zhWATkgF2vp3hIsiNYSIaMqxPrb3ZX0qzcQD7cHa0FdpfGNKB1DVlc4288MaV9sjsR6eHwHvjAmukJbVwTO3U0hMaHaA9DafbYpc2AFAd3pMEZvvnDMbl5g7DQQ6g/DAVQr99l+s8r1rgLZ1gfgPdHm0iCw/1RpobOT38+jfqHVWnqngLx39/V0uWNTzg6Ec0LzKsowJDVyaRuPOwOEWspiQ/JM0RwYu9owipP+WER84Byw== rshaw@mesosphere.com > C:\Users\Administrator\.ssh\authorized_keys
+Invoke-WebRequest https://github.com/aggress.keys -OutFile C:\Users\Administrator\.ssh\authorized_keys
 
 Import-Module C:\progra~1\OpenSSH-Win64\OpenSSHUtils.psd1 -Force
 
 Repair-AuthorizedKeyPermission -FilePath C:\Users\Administrator\.ssh\authorized_keys
+
+net start sshd
