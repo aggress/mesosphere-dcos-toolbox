@@ -87,9 +87,11 @@ sudo /usr/bin/python -m pip install cryptography
 https://docs.mesosphere.com/1.10/cli/install/#manually-installing-the-cli
 
 ### RDP client
+Now I've been using xfreerdp but it requires Quartz and a reboot
 ```
-brew cask install rdp
+brew cask install xfreerdp
 ```
+The alternative is to install Microsoft Remote Desktop from the app store which also works fine
 
 ## General Usage
 
