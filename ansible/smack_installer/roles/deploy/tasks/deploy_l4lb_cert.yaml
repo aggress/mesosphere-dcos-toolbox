@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: Create new self signed certificate for l4lb services
+    shell: dcos security cluster ca newcert --cn *.marathon.l4lb.thisdcos.directory --name-c US --name-st CA --name-o "Mesosphere, Inc." --name-l "San Francisco" --key-algo rsa --key-size 2048 --host *.marathon.l4lb.thisdcos.directory -j > ../../setup/tasks/output/mesoscert.json
+
+  - name: Convert JSON blob into a pem file - certificate
+    shell: cat ../../setup/tasks/output/mesoscert.json | jq -r .certificate > ../../setup/tasks/output/mesoscert.pem
+
+  - name: Convert JSON blob into a pem file - certificate_request
+    shell: cat ../../setup/tasks/output/mesoscert.json | jq -r .certificate_request >> ../../setup/tasks/output/mesoscert.pem
+
+  - name: Convert JSON blob into a pem file - private_key
+    shell: cat ../../setup/tasks/output/mesoscert.json | jq -r .private_key >> ../../setup/tasks/output/mesoscert.pem
+
+  - name: Convert JSON blob into a pem file - private_key
+    command: openssl pkcs12 -export -password pass:changeit -out ../../setup/tasks/output/mesoscert.pkcs12 -in ../../setup/tasks/output/mesoscert.pem
+
+  - name: Import PKCS12 into a Java keystore
+    command: keytool -importkeystore -deststorepass changeit -destkeypass changeit -destkeystore ../../setup/tasks/output/schema-keystore.jks -srckeystore ../../setup/tasks/output/mesoscert.pkcs12 -srcstoretype PKCS12 -srcstorepass changeit
+
+  - name: Base64 encode Keystore
+    shell: cat ../../setup/tasks/output/schema-keystore.jks | base64 | tr -d '\n' > ../../setup/tasks/output/schema-keystore.jks.base64
+
+  - name: Add the Keystore as a secret
+    command: dcos security secrets create -f ../../setup/tasks/output/schema-keystore.jks.base64 __dcos_base64__mykeystore

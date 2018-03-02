@@ -68,7 +68,7 @@
       line: 'ad_hostname: {{ ad_dns }}'
     when: ad_action == "facts" or ad_action == "deploy"
 
-  - name: Auto launch xfreerdp
-    command: xfreerdp --plugin cliprdr --ignore-certificate -u Administrator "{{ ad_dns }}"
-    #command: echo -e "Administrator\\n{{ admin_password.win_password }}\\n004\\n{{ ad_hostname }}" | xfreerdp --from-stdin --ignore-certificate
-    when: auto_xfreerdp == "true" or ad_action == "facts" or ad_action == "deploy"
+  #- name: Auto launch xfreerdp
+  #  command: xfreerdp --plugin cliprdr --ignore-certificate -u Administrator "{{ ad_dns }}"
+  #  command: echo -e "Administrator\\n{{ admin_password.win_password }}\\n004\\n{{ ad_hostname }}" | xfreerdp --from-stdin --ignore-certificate
+  #  when: auto_xfreerdp == "true" or ad_action == "facts" or ad_action == "deploy"

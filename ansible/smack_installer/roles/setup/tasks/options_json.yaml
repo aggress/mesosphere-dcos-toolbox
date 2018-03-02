@@ -2,20 +2,11 @@
 - name: Check for Zookeeper endpoints
   shell: dcos beta-confluent-kafka-zookeeper --name={{ kafka_cluster_identifier }}-beta-confluent-kafka-zookeeper endpoint clientport | jq -r .dns[] | paste -sd, -
   register: zk_endpoints
-  when: package == "confluent-connect" or package == "confluent-schema-registry" or package == "confluent-replicator" or package == "beta-confluent-kafka" or package == "confluent-kafka"
+  when: package == "confluent-connect-x" or package == "confluent-schema-registry-x" or package == "confluent-control-center-x" or package == "beta-confluent-kafka" or package == "confluent-kafka"
 
 - debug:
     var: result
     verbosity: 2
-
-- name: Build disabled/permissive options JSON
-  template: src=roles/setup/tasks/templates/{{ package }}.json.j2 dest=roles/setup/tasks/output/{{ package }}.json
-  when: ( security == "permissive" )or
-        ( security == "disabled" )
-
-- name: Build {{ package }} strict options JSON
-  template: src=roles/setup/tasks/templates/{{ package }}.json-strict.j2 dest=roles/setup/tasks/output/{{ package }}.json
-  when: security == "strict"
 
 - name: Build {{ package }} with all the security options JSON
   template: src=roles/setup/tasks/templates/{{ package }}.json-strict-secure.j2 dest=roles/setup/tasks/output/{{ package }}.json

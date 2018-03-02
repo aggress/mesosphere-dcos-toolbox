@@ -1,10 +1,10 @@
 [masters]
 master
 
-[public-agents]
-public-agent
-
 [private-agents]
 private-agent
+
+[public-agents]
+public-agent
 
 localhost ansible_connection=local
